@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1 id="app-page-heading">Placement Applications</h1>
+            <p id="app-page-subheading">Track and manage candidate recruitment progression</p>
+          </div>
+        </div>
+
+        <!-- Filter Bar for Staff (hidden for students) -->
+        <div class="card p-3 mb-4" id="staff-app-filter-bar" data-role="PLACEMENT_OFFICER,PLACEMENT_COORDINATOR" style="display:none;">
+          <div class="d-flex justify-between align-center flex-wrap gap-3">
+            <div style="flex:2; min-width:240px;">
+              <input type="text" class="form-control" id="coordinator-app-search" placeholder="🔍 Search applicant name, role, or company..." />
+            </div>
+
+            <div style="flex:1; min-width:200px;">
+              <select class="form-select" id="coordinator-app-drive-filter">
+                <option value="">-- All Drives --</option>
+              </select>
+            </div>
+
+            <div style="flex:1; min-width:160px;">
+              <select class="form-select" id="coordinator-app-status-filter">
+                <option value="">-- All Statuses --</option>
+                <option value="APPLIED">Applied</option>
+                <option value="SHORTLISTED">Shortlisted</option>
+                <option value="SELECTED">Selected</option>
+                <option value="REJECTED">Rejected</option>
+                <option value="WITHDRAWN">Withdrawn</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Applications Container -->
+        <div id="applications-container">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Loading applications...</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Application Management
+      </footer>
+    </main>
+  </div>
+
+  <!-- Update Candidate Application Status Modal (Staff Only) -->
+  <div class="modal-backdrop" id="update-app-status-modal">
+    <div class="modal-dialog" style="max-width:440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Application Status</h3>
+        <button class="modal-close-btn" data-modal-close="update-app-status-modal">&times;</button>
+      </div>
+      <form id="update-status-form">
+        <input type="hidden" id="update-app-id" />
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label required" for="update-status-select">Select New Status</label>
+            <select class="form-select" id="update-status-select" required>
+              <option value="APPLIED">APPLIED — Application Under Review</option>
+              <option value="SHORTLISTED">SHORTLISTED — Cleared Round / Invited to Next Stage</option>
+              <option value="SELECTED">SELECTED — Round Cleared / Final Selection</option>
+              <option value="REJECTED">REJECTED — Did Not Meet Round Cutoff</option>
+              <option value="WITHDRAWN">WITHDRAWN — Student Withdrew</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close="update-app-status-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/applications.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Guards.requireAuth()) return;
+
+      const isStudent = Auth.hasRole(CONFIG.ROLES.STUDENT);
+
+      if (isStudent) {
+        document.getElementById('app-page-heading').textContent = 'My Recruitment Applications';
+        document.getElementById('app-page-subheading').textContent = 'Live progress and stage status across all your applications';
+      } else {
+        document.getElementById('app-page-heading').textContent = 'Candidate Application Management';
+        document.getElementById('app-page-subheading').textContent = 'Review applicants, advance recruitment rounds, and record outcomes';
+        document.getElementById('staff-app-filter-bar').style.display = 'block';
+      }
+
+      Layout.init({
+        pageTitle: isStudent ? 'My Applications' : 'Application Management',
+        breadcrumbs: [
+          { label: 'Applications', url: 'applications.html' }
+        ]
+      });
+
+      Applications.init();
+    });
+  </script>
+</body>
+</html>

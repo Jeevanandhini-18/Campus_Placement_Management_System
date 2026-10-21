@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Placement & AI Recommendation System</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body style="background-color: #0f172a; color: #fff;">
+
+  <div style="max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; text-align: center;">
+    <div style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(99,102,241,0.2); border:1px solid rgba(99,102,241,0.4); padding:0.4rem 1rem; border-radius:var(--radius-full); margin-bottom:1.5rem; font-size:0.85rem; color:#c7d2fe;">
+      <span>✨ AI-Powered Collegiate Campus Recruitment & Recommendation Engine</span>
+    </div>
+
+    <h1 style="font-size: 2.8rem; font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 1rem;">
+      Intelligent Campus Placement &amp; Company Workspace
+    </h1>
+
+    <p style="font-size: 1.15rem; color: #94a3b8; max-width: 760px; margin: 0 auto 2.5rem auto; line-height: 1.6;">
+      A unified, enterprise-grade placement platform with dedicated company recruitment folders, automated AI JD processing, resume–JD semantic matching, and explainable recommendations.
+    </p>
+
+    <div class="d-flex justify-center gap-3 mb-6 flex-wrap">
+      <a href="login.html" class="btn btn-primary btn-lg" style="font-weight:600; padding:0.85rem 2rem;">
+        Sign In to Placement Portal &rarr;
+      </a>
+      <a href="register.html" class="btn btn-secondary btn-lg" style="font-weight:600; padding:0.85rem 2rem; background:rgba(255,255,255,0.08); color:#fff; border-color:rgba(255,255,255,0.2);">
+        Student Registration
+      </a>
+    </div>
+
+    <!-- Role Portals Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; text-align: left; margin-top: 3rem;">
+      <!-- Officer Card -->
+      <div class="card" style="background: rgba(30, 41, 59, 0.7); border-color: rgba(255, 255, 255, 0.1); padding: 1.75rem;">
+        <div style="font-size: 1.75rem; margin-bottom: 0.75rem;">🏛️</div>
+        <h3 style="color: #fff; font-size: 1.25rem;">Placement Officer</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5;">
+          Monitor institutional placement statistics, manage dedicated company folders, review AI JD summaries, configure placement policies, and confirm final offers.
+        </p>
+        <a href="login.html?role=OFFICER" style="color: #818cf8; font-weight: 600; font-size: 0.9rem; margin-top: 1.25rem; display: inline-block;">
+          Enter Officer Portal &rarr;
+        </a>
+      </div>
+
+      <!-- Coordinator Card -->
+      <div class="card" style="background: rgba(30, 41, 59, 0.7); border-color: rgba(255, 255, 255, 0.1); padding: 1.75rem;">
+        <div style="font-size: 1.75rem; margin-bottom: 0.75rem;">📋</div>
+        <h3 style="color: #fff; font-size: 1.25rem;">Placement Coordinator</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5;">
+          Organize recruitment drives within company folders, upload and verify AI JD documents, manage round stages, and process student applications.
+        </p>
+        <a href="login.html?role=COORDINATOR" style="color: #818cf8; font-weight: 600; font-size: 0.9rem; margin-top: 1.25rem; display: inline-block;">
+          Enter Coordinator Portal &rarr;
+        </a>
+      </div>
+
+      <!-- Student Card -->
+      <div class="card" style="background: rgba(30, 41, 59, 0.7); border-color: rgba(255, 255, 255, 0.1); padding: 1.75rem;">
+        <div style="font-size: 1.75rem; margin-bottom: 0.75rem;">🎓</div>
+        <h3 style="color: #fff; font-size: 1.25rem;">Student Candidate</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5;">
+          Maintain academic profiles, upload resumes for AI NLP extraction, check drive eligibility, view explainable match scores, and track recruitment progress.
+        </p>
+        <a href="login.html?role=STUDENT" style="color: #818cf8; font-weight: 600; font-size: 0.9rem; margin-top: 1.25rem; display: inline-block;">
+          Enter Student Portal &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top: auto; padding: 2rem; text-align: center; color: #64748b; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06);">
+    AI-Powered Campus Placement Management and Recommendation System &bull; Spring Boot REST &bull; Vanilla HTML/CSS/JS
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Auto redirect if already authenticated
+    if (Auth.isAuthenticated()) {
+      Auth.redirectToRoleDashboard();
+    }
+  </script>
+</body>
+</html>

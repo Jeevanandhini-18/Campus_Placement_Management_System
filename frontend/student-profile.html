@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Profile — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Academic &amp; Placement Profile</h1>
+            <p>Maintain your academic records for eligibility screening and AI match scoring</p>
+          </div>
+          <div>
+            <span class="badge badge-published" id="profile-completion-text">Loading completion...</span>
+          </div>
+        </div>
+
+        <!-- Progress meter -->
+        <div class="card p-3 mb-4">
+          <div class="d-flex justify-between align-center mb-1 text-sm">
+            <span><strong>Profile Readiness</strong></span>
+            <span class="text-secondary text-xs">Complete all fields to maximize opportunity match accuracy</span>
+          </div>
+          <div style="width:100%; height:8px; background:var(--bg-surface-alt); border-radius:4px; overflow:hidden;">
+            <div id="profile-completion-bar" style="width:0%; height:100%; background:var(--primary-600); transition: width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <div id="profile-content-container">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Loading academic profile...</span>
+          </div>
+        </div>
+
+        <div class="card" style="padding:2rem;">
+          <form id="student-profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label required" for="prof-name">Full Name</label>
+                <input type="text" class="form-control" id="prof-name" name="name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label required" for="prof-email">Institutional Email</label>
+                <input type="email" class="form-control" id="prof-email" name="email" readonly style="background-color:var(--bg-surface-alt);" />
+                <span class="form-hint">Email is linked to your institutional account</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label required" for="prof-dept">Academic Department</label>
+                <select class="form-select" id="prof-dept" name="department" required>
+                  <option value="">-- Choose Department --</option>
+                  <option value="Computer Science">Computer Science &amp; Engineering</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Electronics & Communication">Electronics &amp; Communication</option>
+                  <option value="Electrical Engineering">Electrical &amp; Electronics</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Civil Engineering">Civil Engineering</option>
+                  <option value="Data Science">Data Science &amp; AI</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label required" for="prof-grad-year">Graduation Year</label>
+                <select class="form-select" id="prof-grad-year" name="graduationYear" required>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2025">2025</option>
+                  <option value="2028">2028</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label required" for="prof-cgpa">Cumulative CGPA (0.00 – 10.00)</label>
+                <input type="number" step="0.01" min="0" max="10" class="form-control" id="prof-cgpa" name="cgpa" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label required" for="prof-backlogs">Active Backlogs Count</label>
+                <input type="number" min="0" class="form-control" id="prof-backlogs" name="backlogs" required />
+              </div>
+            </div>
+
+            <!-- Skill Tags Section -->
+            <div class="form-group mt-3">
+              <label class="form-label">Technical Skills &amp; Competencies</label>
+              <div class="d-flex gap-2 mb-2">
+                <input type="text" class="form-control" id="new-skill-input" placeholder="Type a skill and press Enter (e.g. Java, Docker, React, Machine Learning)..." />
+                <button type="button" class="btn btn-secondary" id="add-skill-btn">+ Add Skill</button>
+              </div>
+              <div id="skills-tags-container" class="d-flex gap-2 flex-wrap p-2" style="background:var(--bg-surface-alt);border-radius:var(--radius-md);min-height:48px;border:1px solid var(--border-subtle);">
+                <!-- Dynamic Skill Tags -->
+              </div>
+            </div>
+
+            <div class="d-flex justify-end gap-3 mt-4 pt-3" style="border-top:1px solid var(--border-subtle);">
+              <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-lg">Save Academic Profile</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Profile Management
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/students.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Guards.requireRole(CONFIG.ROLES.STUDENT)) return;
+
+      Layout.init({
+        pageTitle: 'My Academic Profile',
+        breadcrumbs: [
+          { label: 'Profile', url: 'student-profile.html' }
+        ]
+      });
+
+      Students.initProfile();
+    });
+  </script>
+</body>
+</html>

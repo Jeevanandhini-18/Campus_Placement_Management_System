@@ -1,0 +1,97 @@
+/**
+ * Responsive CSS: Media Queries for Tablet, Mobile & Drawer Navigation
+ */
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Sidebar Drawer on Mobile */
+  .app-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .app-sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    z-index: calc(var(--z-sticky) - 1);
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-flex;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-topbar {
+    padding: 0 1rem;
+  }
+
+  .breadcrumb-container {
+    padding: 0.6rem 1rem;
+  }
+
+  .page-content {
+    padding: 1rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .modal-dialog {
+    margin: 1rem;
+    max-height: 95vh;
+  }
+
+  .folder-hero {
+    padding: 1.25rem;
+  }
+
+  .folder-hero-stats {
+    gap: 1rem;
+  }
+
+  .user-meta {
+    display: none;
+  }
+}
