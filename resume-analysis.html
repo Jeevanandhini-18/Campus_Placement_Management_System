@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume &amp; AI Skill Analysis — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Resume &amp; AI Skill Extraction</h1>
+            <p>Upload your latest curriculum vitae for automated NLP parsing and skill-gap identification</p>
+          </div>
+          <div class="page-actions">
+            <a href="recommendations.html" class="btn btn-primary">
+              View Matched Opportunities &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Upload Dropzone Card -->
+        <div class="card p-4 mb-4">
+          <h3 class="mb-3">Upload / Replace Resume Document</h3>
+          <div class="file-dropzone" id="resume-dropzone" onclick="document.getElementById('resume-file-input').click()">
+            <svg class="dropzone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <div class="dropzone-title">Click to select or drag and drop your resume file here</div>
+            <div class="dropzone-subtitle">Supported formats: PDF or DOCX (Maximum file size: 10 MB)</div>
+            <input type="file" id="resume-file-input" accept=".pdf,.docx" style="display:none;" />
+          </div>
+
+          <div id="resume-selected-filename" class="text-sm text-bold text-primary mt-2" style="display:none;"></div>
+          <div id="resume-upload-status"></div>
+
+          <div class="d-flex justify-end mt-3">
+            <button type="button" class="btn btn-primary" id="resume-upload-btn" disabled>
+              Upload &amp; Analyze with AI NLP
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic AI Analysis Results Container -->
+        <div id="resume-analysis-container">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Loading resume status and extracted skills...</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; AI Resume Analysis
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/resumes.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Guards.requireRole(CONFIG.ROLES.STUDENT)) return;
+
+      Layout.init({
+        pageTitle: 'Resume & AI Skill Analysis',
+        breadcrumbs: [
+          { label: 'Resume Analysis', url: 'resume-analysis.html' }
+        ]
+      });
+
+      Resumes.init();
+    });
+  </script>
+</body>
+</html>

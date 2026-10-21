@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruitment Drives — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Recruitment Drives Directory</h1>
+            <p>Active and scheduled campus placement opportunities across all recruiting partners</p>
+          </div>
+          <div class="page-actions" data-role="PLACEMENT_OFFICER,PLACEMENT_COORDINATOR">
+            <button type="button" class="btn btn-primary" onclick="Modal.open('create-drive-modal')">
+              + New Recruitment Drive
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="card p-3 mb-4" style="background-color:var(--bg-surface);">
+          <div class="d-flex justify-between align-center flex-wrap gap-3">
+            <div style="flex:2; min-width:240px;">
+              <input type="text" class="form-control" id="drive-search-input" placeholder="🔍 Search by role title or company..." />
+            </div>
+
+            <div style="flex:1; min-width:180px;">
+              <select class="form-select" id="drive-status-filter">
+                <option value="">-- All Statuses --</option>
+                <option value="PUBLISHED">Published (Open)</option>
+                <option value="DRAFT">Draft</option>
+                <option value="CLOSED">Closed</option>
+              </select>
+            </div>
+
+            <div style="flex:1; min-width:180px;">
+              <select class="form-select" id="drive-dept-filter">
+                <option value="">-- All Departments --</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Communication">Electronics &amp; Comm.</option>
+                <option value="Data Science">Data Science</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Drives List Container -->
+        <div id="drives-list-container">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Loading recruitment drives...</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Drives Directory
+      </footer>
+    </main>
+  </div>
+
+  <!-- Create Drive Modal -->
+  <div class="modal-backdrop" id="create-drive-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Campus Recruitment Drive</h3>
+        <button class="modal-close-btn" data-modal-close="create-drive-modal">&times;</button>
+      </div>
+      <form id="create-drive-form">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label required" for="create-drive-company-select">Associate Company Folder</label>
+              <select class="form-select" id="create-drive-company-select" name="companyId" required>
+                <option value="">Loading company folders...</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex:2;">
+              <label class="form-label required" for="drive-title">Role Title</label>
+              <input type="text" class="form-control" id="drive-title" name="title" placeholder="e.g. Software Development Engineer - I" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="drive-loc">Job Location</label>
+              <input type="text" class="form-control" id="drive-loc" name="location" placeholder="e.g. Pan India / Bengaluru" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drive-salary">Compensation / CTC (INR)</label>
+              <input type="number" step="10000" class="form-control" id="drive-salary" name="ctc" placeholder="e.g. 1000000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label required" for="drive-dead">Application Deadline</label>
+              <input type="datetime-local" class="form-control" id="drive-dead" name="applicationDeadline" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label required" for="drive-cgpa">Min CGPA</label>
+              <input type="number" step="0.1" min="0" max="10" class="form-control" id="drive-cgpa" name="minCgpa" value="7.0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label required" for="drive-back">Max Backlogs</label>
+              <input type="number" min="0" class="form-control" id="drive-back" name="maxBacklogs" value="0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label required" for="drive-grad">Graduation Batch</label>
+              <select class="form-select" id="drive-grad" name="graduationYear" required>
+                <option value="2026" selected>2026</option>
+                <option value="2027">2027</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="drive-departments">Eligible Academic Departments</label>
+            <select multiple class="form-select" id="drive-departments" name="eligibleDepartments" style="height:100px;">
+              <option value="Computer Science" selected>Computer Science &amp; Engineering</option>
+              <option value="Information Technology" selected>Information Technology</option>
+              <option value="Electronics & Communication">Electronics &amp; Communication</option>
+              <option value="Electrical Engineering">Electrical Engineering</option>
+              <option value="Data Science" selected>Data Science &amp; AI</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="drive-req-skills">Required Technical Skills (Comma-separated)</label>
+            <input type="text" class="form-control" id="drive-req-skills" name="requiredSkills" placeholder="Java, Python, SQL, REST APIs, Microservices" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="drive-description">Job Description Summary</label>
+            <textarea class="form-textarea" rows="3" id="drive-description" name="description" placeholder="Summary of role expectations, primary responsibilities..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close="create-drive-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Establish Recruitment Drive</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/drives.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Guards.requireAuth()) return;
+
+      Layout.init({
+        pageTitle: 'Recruitment Drives',
+        breadcrumbs: [
+          { label: 'Recruitment Drives', url: 'drive-list.html' }
+        ]
+      });
+
+      Drives.initList();
+    });
+  </script>
+</body>
+</html>

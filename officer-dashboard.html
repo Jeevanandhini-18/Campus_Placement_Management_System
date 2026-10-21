@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer Dashboard — Campus Placement Management</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar injected by Layout.init() -->
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <!-- Topbar injected by Layout.init() -->
+      <header class="app-topbar"></header>
+
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Training &amp; Placement Officer Dashboard</h1>
+            <p>Institutional oversight, recruitment drive status, and placement analytics</p>
+          </div>
+          <div class="page-actions">
+            <a href="companies.html" class="btn btn-secondary">
+              📁 Browse Company Folders
+            </a>
+            <a href="drive-list.html" class="btn btn-primary">
+              + New Recruitment Drive
+            </a>
+          </div>
+        </div>
+
+        <!-- Dynamic Statistics Cards -->
+        <div id="stats-container">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-primary">
+                <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Companies</span>
+                <span class="stat-value" id="stat-total-companies">—</span>
+                <span class="stat-trend text-secondary">With Dedicated Folders</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-info">
+                <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Drives</span>
+                <span class="stat-value" id="stat-total-drives">—</span>
+                <span class="stat-trend text-secondary">Across All Recruiters</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-success">
+                <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Active Published Drives</span>
+                <span class="stat-value" id="stat-active-drives" style="color:var(--success-solid);">—</span>
+                <span class="stat-trend text-success">Open for applications</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-purple">
+                <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Students Placed</span>
+                <span class="stat-value" id="stat-placed-count">—</span>
+                <span class="stat-trend text-secondary">Confirmed Job Offers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Dashboard Split Grid -->
+        <div class="dashboard-grid">
+          <!-- Active Drives & Company Folders Quick Overview -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Recruitment Drives</h3>
+              <a href="drive-list.html" class="text-sm">View All Drives &rarr;</a>
+            </div>
+            <div class="card-body" id="recent-drives-container">
+              <div class="loading-container">
+                <div class="spinner"></div>
+                <span>Fetching drive activities...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action & Policy Status -->
+          <div class="d-flex flex-column gap-3">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Placement Controls</h3>
+              </div>
+              <div class="card-body d-flex flex-column gap-2">
+                <a href="companies.html" class="btn btn-secondary d-flex justify-between align-center" style="text-align:left;">
+                  <span>📁 Dedicated Company Folders</span>
+                  <span>&rarr;</span>
+                </a>
+                <a href="placement-management.html" class="btn btn-secondary d-flex justify-between align-center" style="text-align:left;">
+                  <span>⚖️ Placement Policies &amp; Rules</span>
+                  <span>&rarr;</span>
+                </a>
+                <a href="applications.html" class="btn btn-secondary d-flex justify-between align-center" style="text-align:left;">
+                  <span>👥 Candidate Applications</span>
+                  <span>&rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Activity Stream -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Live System Events</h3>
+              </div>
+              <div class="card-body">
+                <ul class="activity-list" id="activity-feed">
+                  <li class="activity-item">
+                    <div class="activity-bullet"></div>
+                    <div class="activity-content">
+                      <div class="activity-title">Centralized Placement Hub Ready</div>
+                      <div class="activity-time">Live Spring Boot REST API connection</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-bullet" style="background-color: var(--success-solid);"></div>
+                    <div class="activity-content">
+                      <div class="activity-title">Company Folders Active</div>
+                      <div class="activity-time">Persistent database folder associations</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Training &amp; Placement Officer Interface
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Require Officer role
+      if (!Guards.requireRole([CONFIG.ROLES.OFFICER])) return;
+
+      Layout.init({
+        pageTitle: 'Placement Officer Dashboard',
+        breadcrumbs: [{ label: 'Dashboard' }]
+      });
+
+      // Load Statistics
+      try {
+        const [compRes, drivesRes, placeRes] = await Promise.all([
+          Api.get(CONFIG.ENDPOINTS.COMPANIES).catch(() => []),
+          Api.get(CONFIG.ENDPOINTS.DRIVES).catch(() => []),
+          Api.get(CONFIG.ENDPOINTS.PLACEMENT_RECORDS).catch(() => [])
+        ]);
+
+        const companies = Array.isArray(compRes) ? compRes : (compRes.content || []);
+        const drives = Array.isArray(drivesRes) ? drivesRes : (drivesRes.content || []);
+        const placed = Array.isArray(placeRes) ? placeRes : (placeRes.content || []);
+
+        const activeDrives = drives.filter(d => (d.status || '').toUpperCase() === 'PUBLISHED').length;
+
+        document.getElementById('stat-total-companies').textContent = companies.length;
+        document.getElementById('stat-total-drives').textContent = drives.length;
+        document.getElementById('stat-active-drives').textContent = activeDrives;
+        document.getElementById('stat-placed-count').textContent = placed.length;
+
+        // Render Recent Drives in Card Body
+        const recentContainer = document.getElementById('recent-drives-container');
+        if (drives.length === 0) {
+          UI.renderEmptyState(recentContainer, {
+            title: 'No Drives Registered',
+            message: 'No recruitment drives have been created yet.'
+          });
+        } else {
+          let html = `<div class="d-flex flex-column gap-3">`;
+          drives.slice(0, 5).forEach(d => {
+            const companyName = Utils.escapeHtml(d.companyName || d.company?.name || 'Company');
+            const companyId = d.companyId || d.company?.id;
+
+            html += `
+              <div class="d-flex justify-between align-center p-2" style="border-bottom:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:600;">${Utils.escapeHtml(d.title)}</div>
+                  <div class="text-xs text-secondary mt-1">
+                    Company: <strong style="color:var(--primary-700);">${companyName}</strong>
+                    ${companyId ? `&bull; <a href="company-folder.html?id=${companyId}">Open Folder</a>` : ''}
+                  </div>
+                </div>
+                <div class="d-flex align-center gap-2">
+                  ${Utils.getDriveStatusBadge(d.status)}
+                  <a href="drive-details.html?id=${d.id}" class="btn btn-sm btn-outline">Details</a>
+                </div>
+              </div>
+            `;
+          });
+          html += `</div>`;
+          recentContainer.innerHTML = html;
+        }
+
+      } catch (err) {
+        console.error('Failed to load dashboard metrics', err);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <!-- Placement Celebration Alert if Placed -->
+        <div id="student-placed-banner" style="display:none; margin-bottom: 1.5rem;" class="card">
+          <div style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; padding: 1.5rem 1.75rem; border-radius: var(--radius-lg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 800;">🎉 Congratulations! Placement Confirmed</div>
+              <p style="color: #ecfdf5; font-size: 0.95rem; margin-top: 0.25rem;" id="placed-details-text">
+                You have been placed at your dream organization.
+              </p>
+            </div>
+            <span class="badge" style="background:#fff; color:#065f46; font-size:0.9rem; padding:0.4rem 0.85rem;">OFFICIALLY PLACED</span>
+          </div>
+        </div>
+
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Student Placement Dashboard</h1>
+            <p>Personalized AI recommendations, resume matching, and recruitment application tracking</p>
+          </div>
+          <div class="page-actions">
+            <a href="recommendations.html" class="btn btn-primary">
+              ⚡ View AI Recommendations
+            </a>
+            <a href="resume-analysis.html" class="btn btn-secondary">
+              📄 Upload / Update Resume
+            </a>
+          </div>
+        </div>
+
+        <!-- Student Key Metrics -->
+        <div class="stats-grid">
+          <!-- Profile Completion -->
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-primary">
+              <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <div class="stat-info" style="flex:1;">
+              <span class="stat-label">Profile Completion</span>
+              <span class="stat-value" id="student-completion-val">85%</span>
+              <div style="width:100%;height:6px;background:var(--bg-surface-alt);border-radius:3px;margin-top:0.35rem;overflow:hidden;">
+                <div id="student-completion-bar" style="width:85%;height:100%;background:var(--primary-600);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Applications -->
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-info">
+              <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Applications Submitted</span>
+              <span class="stat-value" id="student-apps-count">—</span>
+              <span class="stat-trend text-secondary">Active In Pipeline</span>
+            </div>
+          </div>
+
+          <!-- Eligible Active Drives -->
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-success">
+              <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Eligible Drives</span>
+              <span class="stat-value" id="student-eligible-drives" style="color:var(--success-solid);">—</span>
+              <span class="stat-trend text-success">Satisfies Academic Cutoffs</span>
+            </div>
+          </div>
+
+          <!-- Resume Status -->
+          <div class="stat-card">
+            <div class="stat-icon-wrapper stat-icon-purple">
+              <svg style="width:24px;height:24px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Resume Analysis</span>
+              <span class="stat-value" id="student-resume-status" style="font-size:1.1rem;margin-top:0.35rem;">Verified</span>
+              <span class="stat-trend text-secondary" id="student-skills-count">— Skills Parsed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Top AI Recommended Drives Widget -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">✨ Top AI Opportunity Recommendations</h3>
+              <a href="recommendations.html" class="text-sm">View All Ranked &rarr;</a>
+            </div>
+            <div class="card-body" id="student-rec-container">
+              <div class="loading-container">
+                <div class="spinner"></div>
+                <span>Scanning opportunities with AI matching...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Applications & Shortcuts -->
+          <div class="d-flex flex-column gap-3">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">My Recent Applications</h3>
+                <a href="applications.html" class="text-sm">All &rarr;</a>
+              </div>
+              <div class="card-body" id="student-recent-apps">
+                <div class="loading-container">
+                  <div class="spinner"></div>
+                  <span>Loading applications...</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Portals -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Quick Student Services</h3>
+              </div>
+              <div class="card-body d-flex flex-column gap-2">
+                <a href="student-profile.html" class="btn btn-secondary d-flex justify-between align-center">
+                  <span>🎓 Update Academic Profile &amp; CGPA</span>
+                  <span>&rarr;</span>
+                </a>
+                <a href="resume-analysis.html" class="btn btn-secondary d-flex justify-between align-center">
+                  <span>📄 Upload Latest Resume (PDF/DOCX)</span>
+                  <span>&rarr;</span>
+                </a>
+                <a href="companies.html" class="btn btn-secondary d-flex justify-between align-center">
+                  <span>📁 Explore Company Folders Directory</span>
+                  <span>&rarr;</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Student Candidate Interface
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Guards.requireRole(CONFIG.ROLES.STUDENT)) return;
+
+      Layout.init({
+        pageTitle: 'Student Dashboard',
+        breadcrumbs: [{ label: 'Dashboard' }]
+      });
+
+      try {
+        const [profile, resume, recsRes, appsRes, drivesRes] = await Promise.all([
+          Api.get(CONFIG.ENDPOINTS.STUDENT_ME).catch(() => null),
+          Api.get(CONFIG.ENDPOINTS.STUDENT_RESUME).catch(() => null),
+          Api.get(CONFIG.ENDPOINTS.STUDENT_RECOMMENDATIONS).catch(() => []),
+          Api.get(CONFIG.ENDPOINTS.STUDENT_APPLICATIONS).catch(() => []),
+          Api.get(CONFIG.ENDPOINTS.DRIVES, { status: 'PUBLISHED' }).catch(() => [])
+        ]);
+
+        const recs = Array.isArray(recsRes) ? recsRes : (recsRes.content || []);
+        const apps = Array.isArray(appsRes) ? appsRes : (appsRes.content || []);
+        const drives = Array.isArray(drivesRes) ? drivesRes : (drivesRes.content || []);
+
+        // Profile completion
+        if (profile) {
+          const fields = [profile.name, profile.email, profile.department, profile.cgpa, (profile.skills || []).length > 0];
+          const pct = Math.round((fields.filter(Boolean).length / fields.length) * 100);
+          document.getElementById('student-completion-val').textContent = `${pct}%`;
+          document.getElementById('student-completion-bar').style.width = `${pct}%`;
+
+          // Check if placed
+          if (profile.isPlaced || profile.placementStatus) {
+            const banner = document.getElementById('student-placed-banner');
+            const detailsText = document.getElementById('placed-details-text');
+            if (banner && detailsText) {
+              banner.style.display = 'block';
+              detailsText.textContent = `You have been officially placed at ${profile.placedCompany || 'Campus Recruiter'} for ${Utils.formatCtc(profile.packageCtc)}.`;
+            }
+          }
+        }
+
+        // Applications count
+        document.getElementById('student-apps-count').textContent = apps.length;
+
+        // Eligible count
+        const eligibleCount = recs.filter(r => r.isEligible !== false).length;
+        document.getElementById('student-eligible-drives').textContent = eligibleCount;
+
+        // Resume status
+        if (resume && resume.extractedSkills) {
+          document.getElementById('student-resume-status').textContent = 'AI Processed';
+          document.getElementById('student-skills-count').textContent = `${resume.extractedSkills.length} Skills Extracted`;
+        } else {
+          document.getElementById('student-resume-status').textContent = 'Upload Needed';
+          document.getElementById('student-skills-count').textContent = 'No Resume Uploaded';
+        }
+
+        // Render Recommendations Preview
+        const recContainer = document.getElementById('student-rec-container');
+        if (recs.length === 0) {
+          UI.renderEmptyState(recContainer, {
+            title: 'No Recommendations Available',
+            message: 'Ensure your resume is uploaded to unlock personalized opportunity recommendations.',
+            actionText: 'Upload Resume',
+            onAction: () => window.location.href = 'resume-analysis.html'
+          });
+        } else {
+          let html = `<div class="d-flex flex-column gap-3">`;
+          recs.slice(0, 3).forEach(r => {
+            const drive = r.drive || r;
+            const compName = Utils.escapeHtml(r.companyName || drive.companyName || drive.company?.name || 'Recruiter');
+            const compId = r.companyId || drive.companyId || drive.company?.id;
+            const title = Utils.escapeHtml(drive.title || drive.jobRole || 'Opportunity');
+            const score = r.matchScore ?? r.score ?? 0;
+
+            html += `
+              <div class="card p-3" style="box-shadow:none;border-color:var(--border-subtle);">
+                <div class="d-flex justify-between align-center flex-wrap gap-2">
+                  <div>
+                    <h4 style="font-size:1.05rem;">${title}</h4>
+                    <div class="text-xs text-secondary mt-1">
+                      Company: <strong style="color:var(--primary-700);">${compName}</strong>
+                      ${compId ? `&bull; <a href="company-folder.html?id=${compId}">View Folder</a>` : ''}
+                      &bull; CTC: <strong>${Utils.formatCtc(drive.ctc)}</strong>
+                    </div>
+                  </div>
+                  <div class="d-flex align-center gap-2">
+                    <span class="badge badge-published">${score}% Match</span>
+                    <a href="drive-details.html?id=${drive.id}" class="btn btn-sm btn-primary">Details</a>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          html += `</div>`;
+          recContainer.innerHTML = html;
+        }
+
+        // Render Recent Applications Preview
+        const appContainer = document.getElementById('student-recent-apps');
+        if (apps.length === 0) {
+          UI.renderEmptyState(appContainer, {
+            title: 'No Applications',
+            message: 'You have not applied to any recruitment drives yet.'
+          });
+        } else {
+          let html = `<div class="d-flex flex-column gap-2">`;
+          apps.slice(0, 4).forEach(a => {
+            html += `
+              <div class="d-flex justify-between align-center p-2" style="border-bottom:1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-weight:600;font-size:0.9rem;">${Utils.escapeHtml(a.driveTitle || 'Drive')}</div>
+                  <div class="text-xs text-secondary">${Utils.escapeHtml(a.companyName || 'Company')}</div>
+                </div>
+                ${Utils.getApplicationStatusBadge(a.status)}
+              </div>
+            `;
+          });
+          html += `</div>`;
+          appContainer.innerHTML = html;
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

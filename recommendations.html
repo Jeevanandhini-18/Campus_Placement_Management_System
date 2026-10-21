@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart AI Recommendations — Campus Placement</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/company-folders.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="app-sidebar"></aside>
+
+    <main class="app-main">
+      <header class="app-topbar"></header>
+
+      <nav class="breadcrumb-container" aria-label="Breadcrumb"></nav>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-header-text">
+            <h1>Smart Opportunity Recommendations</h1>
+            <p>Personalized recruitment opportunities ranked by semantic compatibility and institutional eligibility</p>
+          </div>
+          <div class="page-actions">
+            <a href="resume-analysis.html" class="btn btn-secondary btn-sm">
+              📄 View Parsed Skills
+            </a>
+          </div>
+        </div>
+
+        <!-- Sorting & Filter Controls -->
+        <div class="card p-3 mb-4" style="background-color:var(--bg-surface);">
+          <div class="d-flex justify-between align-center flex-wrap gap-3">
+            <div class="d-flex align-center gap-2">
+              <span class="text-xs text-secondary text-bold" style="text-transform:uppercase;">Sort Recommendations By:</span>
+              <select class="form-select" id="rec-sort-select" style="width:200px;">
+                <option value="score" selected>Match Score (Highest First)</option>
+                <option value="ctc">Compensation / CTC (Highest First)</option>
+                <option value="deadline">Application Deadline (Urgent First)</option>
+              </select>
+            </div>
+            <div class="text-xs text-secondary">
+              Ranked dynamically by the placement recommendation engine
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Recommendations List Container -->
+        <div id="recommendations-container">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <span>Analyzing opportunities against your profile...</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        Campus Placement Portal &bull; Smart Recommendations Engine
+      </footer>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/guards.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/recommendations.js"></script>
+  <script src="js/applications.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Guards.requireRole(CONFIG.ROLES.STUDENT)) return;
+
+      Layout.init({
+        pageTitle: 'AI Recommendations',
+        breadcrumbs: [
+          { label: 'Recommendations', url: 'recommendations.html' }
+        ]
+      });
+
+      Recommendations.init();
+    });
+  </script>
+</body>
+</html>
